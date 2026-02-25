@@ -1,6 +1,17 @@
-# GenAI-QA
+# Test Sphere AI
 
-A web app for QA to make their daily testing work easy.
+**Test Sphere AI** is an AI-powered test automation platform designed to streamline the QA workflow. Instead of writing tests by hand, engineers paste or connect their source code and let the AI generate unit tests, integration tests, API tests, and UI tests automatically — across Python, JavaScript/TypeScript, and Java.
+
+Generated tests are executed immediately inside isolated Docker containers, giving instant pass/fail results without any local environment setup. Results are tracked per project and per commit, so teams can monitor test coverage over time and catch regressions early.
+
+Key capabilities at a glance:
+- **AI test generation** — powered by Google Gemini or a local Ollama model
+- **Multi-language support** — Python, JavaScript/TypeScript, Java
+- **Instant execution** — sandboxed Docker containers with live result streaming
+- **Git integration** — connect a GitHub or GitLab repository and trigger test generation automatically on every push
+- **Test management** — organise tests into scenarios, queue jobs, and review historical results
+- **Secrets management** — securely store per-project API keys and credentials with Fernet encryption
+- **CLI tool** — generate and run tests directly from the terminal without opening the browser
 
 ## Prerequisites
 
@@ -1098,5 +1109,14 @@ chmod +x .git/hooks/post-merge
 ```
 
 After installation, you'll see a reminder message whenever you pull code that includes new migrations.
+
+--------
+
+This project is the result of the ICT Summer Internship Challenge at the University of Auckland. Contributors:
+- Muhammad Athallah Rizki Putra
+- Tarak Patel
+- Jibin Joy
+- Shanghui Li
+- Rafif Irdian Muhammad
 
 
