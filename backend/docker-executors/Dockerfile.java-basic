@@ -1,0 +1,12 @@
+FROM eclipse-temurin:21-jdk-alpine-3.23
+
+# Install Maven
+RUN apk add --no-cache maven
+
+# Set working directory
+WORKDIR /app
+
+# Default command (will be overridden by docker run)
+# pom.xml and test files will be mounted/provided at runtime
+# Supports both JUnit and TestNG via Maven test plugin
+CMD ["mvn", "test"]

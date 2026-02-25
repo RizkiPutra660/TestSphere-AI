@@ -1,0 +1,25 @@
+Flask
+Flask-CORS
+Flask-Limiter
+Flask-Caching
+Flask-Compress
+psycopg2-binary
+python-dotenv
+google-generativeai
+ollama
+bcrypt
+PyJWT
+Mail
+flask_mail
+flask_jwt_extended
+click
+requests
+cryptography == 43.0.0
+playwright
+reportlab
+pydantic
+email-validator
+redis
+flasgger
+apispec
+marshmallow

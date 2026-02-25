@@ -1,0 +1,12 @@
+FROM python:3.11-slim
+
+# Install pytest and common testing tools
+RUN pip install --no-cache-dir \
+    pytest==7.4.3 \
+    pytest-cov==4.1.0
+
+# Set working directory
+WORKDIR /app
+
+# Default command (will be overridden by docker run)
+CMD ["pytest"]

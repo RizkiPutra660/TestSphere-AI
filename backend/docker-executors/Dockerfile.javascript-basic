@@ -1,0 +1,33 @@
+FROM node:20-alpine
+
+# Install build tools (for native addons)
+RUN apk add --no-cache python3 make g++
+
+# Install testing frameworks and helpers globally
+RUN npm install -g \
+    jest@29.7.0 \
+    mocha@10.2.0 \
+    jasmine@5.1.0 \
+    chai@4.3.10 \
+    sinon@17.0.1 \
+    supertest@7.1.1 \
+    ts-jest@29.1.1 \
+    ts-node@10.9.1 \
+    typescript@5.3.3 \
+    @types/node@20.10.0 \
+    @types/jest@29.5.11 \
+    @types/mocha@10.0.6 \
+    @types/chai@4.3.11 \
+    @types/sinon@17.0.3 \
+    @types/supertest@6.0.2 \
+    @jest/globals@29.7.0 \
+    expect@29.7.0
+
+# Warm the global npm prefix so require() can resolve global modules from /app
+ENV NODE_PATH="/usr/local/lib/node_modules"
+
+# Set working directory
+WORKDIR /app
+
+# Default command (overridden by docker run)
+CMD ["node", "--version"]

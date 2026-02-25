@@ -1,0 +1,8 @@
+{
+  "name": "testsphere-playwright-runner",
+  "private": true,
+  "type": "module",
+  "devDependencies": {
+    "@playwright/test": "^1.49.0"
+  }
+}

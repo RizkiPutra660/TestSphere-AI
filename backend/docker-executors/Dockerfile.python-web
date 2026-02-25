@@ -1,0 +1,15 @@
+FROM python:3.11-slim
+
+# Install pytest, web frameworks, and HTTP libraries
+RUN pip install --no-cache-dir \
+    pytest==7.4.3 \
+    pytest-cov==4.1.0 \
+    flask==3.0.0 \
+    requests==2.31.0 \
+    httpx==0.25.2
+
+# Set working directory
+WORKDIR /app
+
+# Default command (will be overridden by docker run)
+CMD ["pytest"]

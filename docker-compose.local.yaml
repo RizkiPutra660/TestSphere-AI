@@ -1,0 +1,38 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: genaiqa-backend
+    ports:
+      - "8000:8000"
+    environment:
+      DB_HOST: "host.docker.internal"
+      DB_PORT: "5432"
+      DB_NAME: "${DB_NAME:-qa_automation}"
+      DB_USER: "${DB_USER:-admin}"
+      DB_PASSWORD: "${DB_PASSWORD:-password}"
+      DB_SSLMODE: "${DB_SSLMODE:-disable}"
+
+      JWT_SECRET_KEY: "${JWT_SECRET_KEY:-dev-only}"
+      SECRET_KEY: "${SECRET_KEY:-dev-only}"
+
+      ALLOWED_ORIGINS: "${ALLOWED_ORIGINS:-http://localhost:5173}"
+      FRONTEND_URL: "${FRONTEND_URL:-http://localhost:5173}"
+
+      SECRETS_ENCRYPTION_KEY: "${SECRETS_ENCRYPTION_KEY:-dev-only}"
+      LLM_PROVIDER: "${LLM_PROVIDER:-ollama}"
+      GOOGLE_API_KEY: "${GOOGLE_API_KEY:-}"
+
+      SHARED_WORK_DIR: "/work"
+      DOCKER_VOLUME_NAME: "shared-workdir"
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - shared-workdir:/work
+
+    restart: unless-stopped
+
+volumes:
+  shared-workdir:
+    name: shared-workdir

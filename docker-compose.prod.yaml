@@ -1,0 +1,32 @@
+sservices:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: genaiqa-backend
+    ports:
+      - "8000:8000"
+
+    env_file:
+      - ./runtime.env
+
+    environment:
+      # Executor shared volume mode
+      SHARED_WORK_DIR: "/work"
+      DOCKER_VOLUME_NAME: "shared-workdir"
+
+      # IMPORTANT for cookie auth across domains (set explicitly in runtime.env too if you prefer)
+      FLASK_ENV: "production"
+      COOKIE_SECURE: "true"
+      COOKIE_SAMESITE: "None"
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - shared-workdir:/work
+
+    restart: unless-stopped
+
+volumes:
+  shared-workdir:
+    external: true
+    name: shared-workdir

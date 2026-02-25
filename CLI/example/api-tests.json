@@ -1,0 +1,55 @@
+{
+  "baseUrl": "http://localhost:5000",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "requests": [
+    {
+      "name": "Get all users",
+      "method": "GET",
+      "path": "/api/users",
+      "expectedStatus": 200
+    },
+    {
+      "name": "Get single user by ID",
+      "method": "GET",
+      "path": "/api/users/1",
+      "expectedStatus": 200
+    },
+    {
+      "name": "Create new user",
+      "method": "POST",
+      "path": "/api/users",
+      "body": {
+        "email": "test@example.com",
+        "password": "password123",
+        "name": "Test User"
+      },
+      "expectedStatus": 201
+    },
+    {
+      "name": "Get projects (dashboard)",
+      "method": "GET",
+      "path": "/api/dashboard/1",
+      "expectedStatus": 200
+    },
+    {
+      "name": "Test history",
+      "method": "GET",
+      "path": "/api/history/1",
+      "expectedStatus": 200
+    },
+    {
+      "name": "Get recent test runs",
+      "method": "GET",
+      "path": "/api/dashboard/1/recent-runs?project_id=1",
+      "expectedStatus": 200
+    },
+    {
+      "name": "Test unexisting api",
+      "method": "GET",
+      "path": "/api/unknown",
+      "expectedStatus": 200
+    }
+  ]
+}

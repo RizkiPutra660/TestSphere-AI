@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UI Testing Guide - TestSphereAI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #1f2937;
+            background: #f9fafb;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: white;
+            min-height: 100vh;
+        }
+
+        header {
+            margin-bottom: 40px;
+            border-bottom: 3px solid #3b82f6;
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #1e40af;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.1em;
+            color: #6b7280;
+        }
+
+        h2 {
+            font-size: 1.8em;
+            color: #1e40af;
+            margin-top: 35px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        h3 {
+            font-size: 1.3em;
+            color: #1f2937;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        h4 {
+            font-size: 1.1em;
+            color: #374151;
+            margin-top: 15px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 12px;
+            line-height: 1.7;
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        code {
+            background: #f3f4f6;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.9em;
+            color: #d97706;
+        }
+
+        pre {
+            background: #1f2937;
+            color: #e5e7eb;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.85em;
+            line-height: 1.5;
+        }
+
+        .step-type {
+            background: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 6px;
+        }
+
+        .step-type h4 {
+            color: #1e40af;
+            margin-top: 0;
+        }
+
+        .required {
+            display: inline-block;
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-left: 5px;
+        }
+
+        .tip {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 6px;
+        }
+
+        .tip strong {
+            color: #92400e;
+        }
+
+        .warning {
+            background: #fee2e2;
+            border-left: 4px solid #ef4444;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 6px;
+        }
+
+        .warning strong {
+            color: #991b1b;
+        }
+
+        .success {
+            background: #dcfce7;
+            border-left: 4px solid #22c55e;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 6px;
+        }
+
+        .success strong {
+            color: #166534;
+        }
+
+        .example-scenario {
+            background: #f3f4f6;
+            border: 1px solid #d1d5db;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+
+        .example-scenario h4 {
+            color: #1e40af;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .example-step {
+            background: white;
+            padding: 10px;
+            margin: 8px 0;
+            border-left: 3px solid #3b82f6;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.9em;
+            color: #1f2937;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        th, td {
+            border: 1px solid #e5e7eb;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #f3f4f6;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .toc {
+            background: #f0f9ff;
+            border: 1px solid #bfdbfe;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+
+        .toc h3 {
+            margin-top: 0;
+            color: #1e40af;
+        }
+
+        .toc ul {
+            list-style: none;
+            margin: 0;
+        }
+
+        .toc li {
+            margin: 8px 0;
+        }
+
+        .toc a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .toc a:hover {
+            text-decoration: underline;
+        }
+
+        .footer {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 2px solid #e5e7eb;
+            text-align: center;
+            color: #6b7280;
+            font-size: 0.9em;
+        }
+
+        .print-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s;
+            z-index: 1000;
+        }
+
+        .print-button:hover {
+            background: #2563eb;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            h2 {
+                font-size: 1.4em;
+            }
+
+            .print-button {
+                position: static;
+                display: block;
+                width: 100%;
+                margin-bottom: 20px;
+            }
+        }
+
+        @media print {
+            .print-button {
+                display: none;
+            }
+
+            body {
+                background: white;
+            }
+
+            .container {
+                padding: 0;
+                max-width: 100%;
+            }
+
+            h1, h2, h3 {
+                page-break-after: avoid;
+            }
+
+            p, ul, ol {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="print-button" onclick="window.print()">📄 Print / Save as PDF</button>
+
+    <div class="container">
+        <header>
+            <h1>🎭 UI Testing Guide</h1>
+            <p class="subtitle">Create automated end-to-end tests for your web application using Playwright</p>
+        </header>
+
+        <div class="toc">
+            <h3>📑 Table of Contents</h3>
+            <ul>
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#getting-started">Getting Started</a></li>
+                <li><a href="#scenarios">Creating Scenarios</a></li>
+                <li><a href="#steps">Understanding Steps</a></li>
+                <li><a href="#selectors">Selectors Guide</a></li>
+                <li><a href="#step-types">Step Types</a></li>
+                <li><a href="#examples">Example Scenarios</a></li>
+                <li><a href="#best-practices">Best Practices</a></li>
+                <li><a href="#running-tests">Running Tests</a></li>
+                <li><a href="#results">Understanding Results</a></li>
+                <li><a href="#troubleshooting">Troubleshooting</a></li>
+                <li><a href="#tips">Tips & Tricks</a></li>
+            </ul>
+        </div>
+
+        <section id="overview">
+            <h2>Overview</h2>
+            <p>The <strong>UI Testing</strong> feature allows you to create automated end-to-end (E2E) tests for your web application using <strong>Playwright</strong>. These tests simulate real user interactions like clicking buttons, filling forms, and navigating pages.</p>
+            <p>Instead of manually clicking through your application to test features, you can define test scenarios that run automatically and verify that everything works as expected.</p>
+        </section>
+
+        <section id="getting-started">
+            <h2>Getting Started</h2>
+            <h3>1. Set Base URL</h3>
+            <p>Enter the URL of your application where you want to run tests:</p>
+            <ul>
+                <li><strong>Local development</strong>: <code>http://localhost:5173</code></li>
+                <li><strong>Staging</strong>: <code>https://staging.example.com</code></li>
+                <li><strong>Production</strong>: <code>https://example.com</code></li>
+            </ul>
+            <div class="warning">
+                <strong>⚠️ Important:</strong> Do NOT include a trailing slash (<code>/</code>) in the URL.
+            </div>
+        </section>
+
+        <section id="scenarios">
+            <h2>Creating Scenarios</h2>
+            <p>A <strong>Scenario</strong> is a sequence of user actions that tests a specific workflow (e.g., "Login happy path", "Purchase flow").</p>
+
+            <h3>Add a New Scenario</h3>
+            <ol>
+                <li>Click the <strong>"+ Add scenario"</strong> button</li>
+                <li>Fill in:
+                    <ul>
+                        <li><strong>Scenario name:</strong> Descriptive name (e.g., "Login with valid credentials")</li>
+                        <li><strong>Start path:</strong> The initial page path (e.g., <code>/login</code>)</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h3>Delete a Scenario</h3>
+            <p>Click the <strong>trash icon</strong> next to any scenario to remove it.</p>
+        </section>
+
+        <section id="steps">
+            <h2>Understanding Steps</h2>
+            <p>A <strong>Step</strong> represents a single user action or assertion. Each scenario contains multiple steps that execute in order.</p>
+
+            <h3>Adding Steps</h3>
+            <ol>
+                <li>Within a scenario, click <strong>"+ Add step"</strong></li>
+                <li>Select the <strong>Type</strong> from the dropdown</li>
+                <li>Fill in the required fields based on step type</li>
+                <li>Click the trash icon to delete a step</li>
+            </ol>
+        </section>
+
+        <section id="selectors">
+            <h2>Selectors Guide</h2>
+            <p>A <strong>selector</strong> is a way to identify and find elements on your web page. It's like a GPS coordinate that points to a specific button, input field, or text. When you want to click, fill, or verify something, you use a selector to tell the test exactly which element to interact with.</p>
+
+            <h3>What is a Selector?</h3>
+            <p>Think of selectors like CSS rules that match elements in your HTML. For example:</p>
+            <pre>&lt;button data-testid="login-btn" class="btn btn-primary" id="main-login"&gt;Login&lt;/button&gt;</pre>
+            <p>This button element can be found using multiple selectors:</p>
+            <ul>
+                <li><code>[data-testid=login-btn]</code> - By data-testid attribute</li>
+                <li><code>.btn</code> - By class name</li>
+                <li><code>#main-login</code> - By ID</li>
+                <li><code>button</code> - By element type</li>
+            </ul>
+
+            <h3>Types of Selectors</h3>
+
+            <h4>1. Data Test ID (RECOMMENDED) ⭐</h4>
+            <p>The most reliable way to select elements.</p>
+            <pre>&lt;button data-testid="login-btn"&gt;Login&lt;/button&gt;
+
+/* Use this selector: */
+[data-testid=login-btn]</pre>
+            <div class="success">
+                <strong>✅ Why use data-testid?</strong>
+                <ul>
+                    <li>Stable and won't change when styling updates</li>
+                    <li>Explicitly designed for testing</li>
+                    <li>Easy to understand and maintain</li>
+                    <li>Survives CSS class changes</li>
+                </ul>
+            </div>
+
+            <h4>2. CSS Class</h4>
+            <p>Select elements by their CSS class names.</p>
+            <pre>&lt;button class="btn btn-primary btn-large"&gt;Click me&lt;/button&gt;
+
+/* Use this selector: */
+.btn
+.btn-primary
+.btn-large</pre>
+            <div class="warning">
+                <strong>⚠️ Use with caution:</strong> Class names can change during styling updates, breaking your tests.
+            </div>
+
+            <h4>3. Element ID</h4>
+            <p>Select elements by their unique ID attribute.</p>
+            <pre>&lt;input id="email-input" type="email" /&gt;
+
+/* Use this selector: */
+#email-input</pre>
+            <div class="warning">
+                <strong>⚠️ Use with caution:</strong> IDs should be unique, but may change in refactoring.
+            </div>
+
+            <h4>4. Element Type</h4>
+            <p>Select elements by their HTML tag name.</p>
+            <pre>&lt;button&gt;Click me&lt;/button&gt;
+&lt;button&gt;Another button&lt;/button&gt;
+
+/* Use this selector: */
+button              /* Selects first button */
+button:nth-of-type(2)  /* Selects second button */</pre>
+            <div class="warning">
+                <strong>⚠️ Use with caution:</strong> May select the wrong element if multiple elements match.
+            </div>
+
+            <h4>5. Text Content</h4>
+            <p>Select elements by their visible text.</p>
+            <pre>&lt;button&gt;Login&lt;/button&gt;
+
+/* Use this selector: */
+text=Login</pre>
+            <div class="warning">
+                <strong>⚠️ Use with caution:</strong> Breaking if button text changes.
+            </div>
+
+            <h4>6. Attribute Selectors</h4>
+            <p>Select elements by any HTML attribute.</p>
+            <pre>&lt;input type="email" placeholder="Enter email" /&gt;
+&lt;button aria-label="Submit form"&gt;Submit&lt;/button&gt;
+
+/* Use these selectors: */
+[type=email]
+[placeholder="Enter email"]
+[aria-label="Submit form"]</pre>
+
+            <h4>7. Role & Aria Attributes (RECOMMENDED) ⭐</h4>
+            <p>Select elements using semantic accessibility attributes. These are specifically designed to identify elements by their purpose and are excellent for testing.</p>
+            <pre>&lt;div role="alert"&gt;Error message&lt;/div&gt;
+&lt;button aria-label="Close menu"&gt;×&lt;/button&gt;
+&lt;form role="search"&gt;...&lt;/form&gt;
+&lt;div role="navigation"&gt;...&lt;/div&gt;
+
+/* Use these selectors: */
+[role=alert]
+[aria-label="Close menu"]
+[role=search]
+[role=navigation]</pre>
+            <div class="success">
+                <strong>✅ Why use role= and aria-label?</strong>
+                <ul>
+                    <li>Explicitly describe element purpose</li>
+                    <li>Semantically meaningful for accessibility</li>
+                    <li>Stable and unlikely to change</li>
+                    <li>Help developers write accessible code</li>
+                    <li>Excellent for testing (same reason as data-testid)</li>
+                    <li>Work well when data-testid isn't available</li>
+                </ul>
+            </div>
+
+            <h3>Common Role Attributes</h3>
+            <table>
+                <tr>
+                    <th>Role</th>
+                    <th>Usage</th>
+                    <th>Selector Example</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td><code>alert</code></td>
+                    <td>Error/warning messages</td>
+                    <td><code>[role=alert]</code></td>
+                    <td>For critical messages users should see immediately</td>
+                </tr>
+                <tr>
+                    <td><code>button</code></td>
+                    <td>Clickable elements</td>
+                    <td><code>[role=button]</code></td>
+                    <td>On divs that act like buttons</td>
+                </tr>
+                <tr>
+                    <td><code>dialog</code></td>
+                    <td>Modal dialogs</td>
+                    <td><code>[role=dialog]</code></td>
+                    <td>For popup modals or overlays</td>
+                </tr>
+                <tr>
+                    <td><code>menu</code></td>
+                    <td>Menu lists</td>
+                    <td><code>[role=menu]</code></td>
+                    <td>Dropdown menus or navigation</td>
+                </tr>
+                <tr>
+                    <td><code>navigation</code></td>
+                    <td>Navigation sections</td>
+                    <td><code>[role=navigation]</code></td>
+                    <td>Header/sidebar navigation</td>
+                </tr>
+                <tr>
+                    <td><code>search</code></td>
+                    <td>Search functionality</td>
+                    <td><code>[role=search]</code></td>
+                    <td>Search forms or components</td>
+                </tr>
+                <tr>
+                    <td><code>tablist</code></td>
+                    <td>Tab containers</td>
+                    <td><code>[role=tablist]</code></td>
+                    <td>Tab navigation groups</td>
+                </tr>
+                <tr>
+                    <td><code>main</code></td>
+                    <td>Main content area</td>
+                    <td><code>[role=main]</code></td>
+                    <td>Primary page content</td>
+                </tr>
+                <tr>
+                    <td><code>region</code></td>
+                    <td>Distinct regions</td>
+                    <td><code>[role=region]</code></td>
+                    <td>Important page sections</td>
+                </tr>
+            </table>
+
+            <h3>Common Aria Attributes</h3>
+            <table>
+                <tr>
+                    <th>Attribute</th>
+                    <th>Usage</th>
+                    <th>Selector Example</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td><code>aria-label</code></td>
+                    <td>Element labels</td>
+                    <td><code>[aria-label="Close"]</code></td>
+                    <td>For elements without visible text (icons, buttons)</td>
+                </tr>
+                <tr>
+                    <td><code>aria-hidden</code></td>
+                    <td>Hidden from screen readers</td>
+                    <td><code>[aria-hidden=false]</code></td>
+                    <td>Content assistive tech should skip</td>
+                </tr>
+                <tr>
+                    <td><code>aria-expanded</code></td>
+                    <td>Expandable sections</td>
+                    <td><code>[aria-expanded=true]</code></td>
+                    <td>For collapsible menus/panels</td>
+                </tr>
+                <tr>
+                    <td><code>aria-live</code></td>
+                    <td>Dynamic content</td>
+                    <td><code>[aria-live=polite]</code></td>
+                    <td>Real-time updates (notifications, counts)</td>
+                </tr>
+                <tr>
+                    <td><code>aria-invalid</code></td>
+                    <td>Form validation</td>
+                    <td><code>[aria-invalid=true]</code></td>
+                    <td>Invalid form fields</td>
+                </tr>
+                <tr>
+                    <td><code>aria-describedby</code></td>
+                    <td>Help text/descriptions</td>
+                    <td><code>[aria-describedby="error-msg"]</code></td>
+                    <td>Links to descriptive text</td>
+                </tr>
+            </table>
+
+            <h3>Real-World Role Examples</h3>
+            <div class="example-scenario">
+                <h4>Error Alert</h4>
+                <pre>&lt;div role="alert" class="error-box"&gt;
+  Invalid email format
+&lt;/div&gt;
+
+/* Selector: */
+[role=alert]</pre>
+            </div>
+
+            <div class="example-scenario">
+                <h4>Close Button (Icon Only)</h4>
+                <pre>&lt;button aria-label="Close modal"&gt;
+  ×
+&lt;/button&gt;
+
+/* Selector: */
+[aria-label="Close modal"]</pre>
+            </div>
+
+            <div class="example-scenario">
+                <h4>Expandable Menu</h4>
+                <pre>&lt;button aria-expanded="false" aria-controls="menu-items"&gt;
+  Menu
+&lt;/button&gt;
+&lt;ul id="menu-items" role="menu"&gt;
+  ...
+&lt;/ul&gt;
+
+/* Selectors: */
+[aria-expanded=false]  /* Button when closed */
+[role=menu]            /* Menu list */</pre>
+            </div>
+
+            <div class="example-scenario">
+                <h4>Invalid Form Field</h4>
+                <pre>&lt;input 
+  type="email" 
+  aria-invalid="true"
+  aria-describedby="email-error"
+/&gt;
+&lt;span id="email-error"&gt;Enter a valid email&lt;/span&gt;
+
+/* Selectors: */
+[aria-invalid=true]        /* Invalid input */
+[aria-describedby="email-error"]  /* Error message */</pre>
+            </div>
+
+            <h3>Combining Role with Other Attributes</h3>
+            <p>You can combine role selectors with other selectors for more precision:</p>
+            <pre>/* Button in a dialog */
+[role=dialog] button
+
+/* Alert with specific class */
+[role=alert].error
+
+/* Navigation link */
+[role=navigation] a[data-testid=link]
+
+/* Search input */
+[role=search] input[type=text]</pre>
+
+            <h3>How to Find Selectors</h3>
+
+            <h4>Method 1: Using Browser DevTools (Easiest)</h4>
+            <ol>
+                <li>Open your application in the browser</li>
+                <li>Press <code>F12</code> or <code>Ctrl+Shift+I</code> to open DevTools</li>
+                <li>Click the <strong>Element Inspector</strong> icon (top-left corner of DevTools)</li>
+                <li>Click on the element you want to select</li>
+                <li>Right-click on the highlighted element in DevTools</li>
+                <li>Select <strong>"Copy → Copy selector"</strong></li>
+                <li>Paste it into your test field</li>
+            </ol>
+
+            <h4>Method 2: Check HTML Code</h4>
+            <ol>
+                <li>Right-click on the element on the page</li>
+                <li>Select <strong>"Inspect"</strong> or <strong>"Inspect Element"</strong></li>
+                <li>Look at the HTML code in DevTools</li>
+                <li>Find <code>data-testid</code>, <code>id</code>, or <code>class</code> attributes</li>
+                <li>Use the appropriate selector</li>
+            </ol>
+
+            <h4>Method 3: Test in Browser Console</h4>
+            <ol>
+                <li>Open DevTools with <code>F12</code></li>
+                <li>Go to the <strong>Console</strong> tab</li>
+                <li>Type: <code>document.querySelector('[data-testid=login-btn]')</code></li>
+                <li>If it returns an element, your selector is correct!</li>
+                <li>If it returns <code>null</code>, try a different selector</li>
+            </ol>
+
+            <h3>Complex Selectors (Advanced)</h3>
+
+            <h4>Combining Selectors</h4>
+            <p>Select elements that match multiple conditions:</p>
+            <pre>/* Button with class "btn" AND text "Login" */
+button.btn:has-text("Login")
+
+/* Input inside a form with data-testid */
+form[data-testid=login-form] input[type=email]
+
+/* First child element */
+[data-testid=container] > div:first-child</pre>
+
+            <h4>Relative Selectors</h4>
+            <p>Select elements relative to a known element:</p>
+            <pre>/* Find label, then get the input after it */
+label:has-text("Email") + input
+
+/* Find element near another element */
+[data-testid=error-message] ~ .close-btn</pre>
+
+            <h3>Real-World Examples</h3>
+
+            <table>
+                <tr>
+                    <th>Element</th>
+                    <th>HTML</th>
+                    <th>Selector</th>
+                    <th>Why</th>
+                </tr>
+                <tr>
+                    <td>Login Button</td>
+                    <td><code>&lt;button data-testid="auth-login"&gt;Login&lt;/button&gt;</code></td>
+                    <td><code>[data-testid=auth-login]</code></td>
+                    <td>Best: Has explicit test ID</td>
+                </tr>
+                <tr>
+                    <td>Email Input</td>
+                    <td><code>&lt;input id="user-email" type="email" /&gt;</code></td>
+                    <td><code>#user-email</code></td>
+                    <td>Good: Has unique ID</td>
+                </tr>
+                <tr>
+                    <td>Submit Button</td>
+                    <td><code>&lt;button type="submit" class="btn btn-primary"&gt;Submit&lt;/button&gt;</code></td>
+                    <td><code>button[type=submit]</code></td>
+                    <td>Acceptable: Uses attribute selector</td>
+                </tr>
+                <tr>
+                    <td>Error Message</td>
+                    <td><code>&lt;div class="error" role="alert"&gt;Invalid input&lt;/div&gt;</code></td>
+                    <td><code>[role=alert]</code></td>
+                    <td>Good: Uses semantic attribute</td>
+                </tr>
+                <tr>
+                    <td>Header Title</td>
+                    <td><code>&lt;h1 class="page-title"&gt;Welcome&lt;/h1&gt;</code></td>
+                    <td><code>h1.page-title</code></td>
+                    <td>Acceptable: Specific element + class</td>
+                </tr>
+            </table>
+
+            <h3>Debugging Selector Issues</h3>
+
+            <h4>Selector Not Found?</h4>
+            <div class="warning">
+                <strong>Problem:</strong> Test fails with "selector not found" error
+                <br><strong>Solutions:</strong>
+                <ol>
+                    <li>Open DevTools console: <code>document.querySelector('your-selector')</code></li>
+                    <li>If it returns <code>null</code>, the selector is wrong</li>
+                    <li>Check for typos in the selector</li>
+                    <li>Try copying selector directly from DevTools</li>
+                    <li>Make sure element exists (might be hidden or in iframe)</li>
+                </ol>
+            </div>
+
+            <h4>Too Many Elements Match?</h4>
+            <div class="warning">
+                <strong>Problem:</strong> Test finds the wrong element (e.g., first button instead of third)
+                <br><strong>Solutions:</strong>
+                <ol>
+                    <li>Make selector more specific (add data-testid if possible)</li>
+                    <li>Use <code>:nth-of-type()</code> or <code>:nth-child()</code> to select specific element</li>
+                    <li>Add parent context: <code>.modal [data-testid=submit-btn]</code></li>
+                    <li>Combine multiple selectors</li>
+                </ol>
+            </div>
+
+            <h4>Element is Hidden/Covered?</h4>
+            <div class="warning">
+                <strong>Problem:</strong> Element exists but is not visible
+                <br><strong>Solutions:</strong>
+                <ol>
+                    <li>Add <code>waitFor</code> step before selecting: <code>waitFor ms: 1000</code></li>
+                    <li>Make sure modal/popup is open first</li>
+                    <li>Check if element is inside a collapsed section</li>
+                    <li>Verify parent elements are visible</li>
+                </ol>
+            </div>
+
+            <h3>Selector Best Practices Checklist</h3>
+            <div class="success">
+                <strong>✅ Do:</strong>
+                <ul>
+                    <li>Prefer <code>data-testid</code> attributes</li>
+                    <li>Use semantic HTML attributes (<code>role</code>, <code>aria-label</code>)</li>
+                    <li>Make selectors as specific as possible</li>
+                    <li>Test selectors in DevTools console before using</li>
+                    <li>Use element IDs if they're stable</li>
+                    <li>Document complex selectors in comments</li>
+                </ul>
+            </div>
+            <div class="warning">
+                <strong>❌ Don't:</strong>
+                <ul>
+                    <li>Rely solely on class names (change frequently)</li>
+                    <li>Use element tags alone (too generic)</li>
+                    <li>Depend on text content (may change)</li>
+                    <li>Use XPath (CSS selectors are more reliable)</li>
+                    <li>Create selectors on generated/dynamic content</li>
+                    <li>Select deeply nested elements (brittle)</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="step-types">
+            <h2>Step Types</h2>
+
+            <h3>Navigation</h3>
+
+            <div class="step-type">
+                <h4>goto</h4>
+                <p>Navigate to a path on the application.</p>
+                <p><strong>Required:</strong> <span class="required">Path</span></p>
+                <p><strong>Example:</strong> Start at <code>/login</code>, then navigate to <code>/checkout</code></p>
+            </div>
+
+            <h3>User Input</h3>
+
+            <div class="step-type">
+                <h4>fill</h4>
+                <p>Fill an input field with text.</p>
+                <p><strong>Required:</strong> <span class="required">Selector</span>, <span class="required">Value</span></p>
+                <ul>
+                    <li><strong>Selector:</strong> Use <code>[data-testid=...]</code> or other CSS selectors</li>
+                    <li><strong>Value:</strong> Text to enter</li>
+                </ul>
+                <p><strong>Example:</strong> Fill email input with <code>test@example.com</code></p>
+            </div>
+
+            <div class="step-type">
+                <h4>click</h4>
+                <p>Click on an element.</p>
+                <p><strong>Required:</strong> <span class="required">Selector</span></p>
+                <p><strong>Example:</strong> Click the "Login" button with selector <code>[data-testid=login-btn]</code></p>
+            </div>
+
+            <div class="step-type">
+                <h4>press</h4>
+                <p>Press a keyboard key on a focused element.</p>
+                <p><strong>Required:</strong> <span class="required">Selector</span>, <span class="required">Key</span></p>
+                <p><strong>Supported keys:</strong> <code>Enter</code>, <code>Escape</code>, <code>Tab</code>, <code>Backspace</code>, <code>Delete</code>, <code>ArrowUp</code>, <code>ArrowDown</code>, etc.</p>
+                <p><strong>Example:</strong> Press <code>Enter</code> to submit a form</p>
+            </div>
+
+            <h3>Waiting</h3>
+
+            <div class="step-type">
+                <h4>waitFor</h4>
+                <p>Wait for an element to become visible or wait for a specified time.</p>
+                <p><strong>Options:</strong></p>
+                <ul>
+                    <li><strong>Option 1:</strong> Provide a <strong>Selector</strong> (waits until visible)</li>
+                    <li><strong>Option 2:</strong> Provide <strong>milliseconds</strong> (waits for duration)</li>
+                </ul>
+                <p><strong>Example:</strong> Wait for a loading spinner to disappear by selector, or wait 1000ms for an API response</p>
+            </div>
+
+            <h3>Assertions (Validations)</h3>
+
+            <div class="step-type">
+                <h4>expectVisible</h4>
+                <p>Assert that an element is visible on the page.</p>
+                <p><strong>Required:</strong> <span class="required">Selector</span></p>
+                <p><strong>Example:</strong> Verify the dashboard header is visible after login</p>
+            </div>
+
+            <div class="step-type">
+                <h4>expectHidden</h4>
+                <p>Assert that an element is NOT visible or doesn't exist.</p>
+                <p><strong>Required:</strong> <span class="required">Selector</span></p>
+                <p><strong>Example:</strong> Verify the login form disappears after successful login</p>
+            </div>
+
+            <div class="step-type">
+                <h4>expectTextContains</h4>
+                <p>Assert that an element's text contains a specific value.</p>
+                <p><strong>Required:</strong> <span class="required">Selector</span>, <span class="required">Value</span></p>
+                <p><strong>Example:</strong> Verify the welcome message contains "Hello, John"</p>
+            </div>
+
+            <div class="step-type">
+                <h4>expectUrlContains</h4>
+                <p>Assert that the current URL contains a specific path.</p>
+                <p><strong>Required:</strong> <span class="required">Value</span> (path substring)</p>
+                <p><strong>Example:</strong> After login, verify URL contains <code>/dashboard</code></p>
+            </div>
+
+            <div class="step-type">
+                <h4>expectTitleContains</h4>
+                <p>Assert that the page title contains a specific text.</p>
+                <p><strong>Required:</strong> <span class="required">Value</span></p>
+                <p><strong>Example:</strong> Verify page title is "Products | MyApp"</p>
+            </div>
+        </section>
+
+        <section id="examples">
+            <h2>Example Scenarios</h2>
+
+            <h3>Scenario 1: Login Happy Path</h3>
+            <div class="example-scenario">
+                <h4>Start path: /login</h4>
+                <div class="example-step"><strong>Step 1</strong> [fill] → Selector: <code>[data-testid=email]</code> → Value: <code>test@example.com</code></div>
+                <div class="example-step"><strong>Step 2</strong> [fill] → Selector: <code>[data-testid=password]</code> → Value: <code>Password123!</code></div>
+                <div class="example-step"><strong>Step 3</strong> [click] → Selector: <code>[data-testid=login-btn]</code></div>
+                <div class="example-step"><strong>Step 4</strong> [waitFor] → ms: <code>1000</code> (wait for redirect)</div>
+                <div class="example-step"><strong>Step 5</strong> [expectUrlContains] → Value: <code>/dashboard</code></div>
+                <div class="example-step"><strong>Step 6</strong> [expectVisible] → Selector: <code>[data-testid=welcome]</code></div>
+            </div>
+
+            <h3>Scenario 2: Add to Cart and Checkout</h3>
+            <div class="example-scenario">
+                <h4>Start path: /products</h4>
+                <div class="example-step"><strong>Step 1</strong> [click] → Selector: <code>[data-testid=product-123]</code></div>
+                <div class="example-step"><strong>Step 2</strong> [click] → Selector: <code>[data-testid=add-to-cart-btn]</code></div>
+                <div class="example-step"><strong>Step 3</strong> [expectVisible] → Selector: <code>[data-testid=cart-badge]</code></div>
+                <div class="example-step"><strong>Step 4</strong> [click] → Selector: <code>[data-testid=checkout-btn]</code></div>
+                <div class="example-step"><strong>Step 5</strong> [waitFor] → ms: <code>800</code> (wait for form load)</div>
+                <div class="example-step"><strong>Step 6</strong> [fill] → Selector: <code>[data-testid=card-number]</code> → Value: <code>4111111111111111</code></div>
+                <div class="example-step"><strong>Step 7</strong> [click] → Selector: <code>[data-testid=place-order-btn]</code></div>
+                <div class="example-step"><strong>Step 8</strong> [expectTextContains] → Selector: <code>body</code> → Value: <code>Order confirmed</code></div>
+            </div>
+
+            <h3>Scenario 3: Form Validation</h3>
+            <div class="example-scenario">
+                <h4>Start path: /register</h4>
+                <div class="example-step"><strong>Step 1</strong> [fill] → Selector: <code>[data-testid=username]</code> → Value: <code>ab</code> (too short)</div>
+                <div class="example-step"><strong>Step 2</strong> [click] → Selector: <code>[data-testid=submit-btn]</code></div>
+                <div class="example-step"><strong>Step 3</strong> [expectVisible] → Selector: <code>[data-testid=error-message]</code></div>
+                <div class="example-step"><strong>Step 4</strong> [expectTextContains] → Selector: <code>[data-testid=error-message]</code> → Value: <code>at least 3 characters</code></div>
+            </div>
+        </section>
+
+        <section id="best-practices">
+            <h2>Best Practices</h2>
+
+            <h3>1. Use Data Test IDs</h3>
+            <p>Always prefer selectors with <code>data-testid</code> attributes:</p>
+            <pre>&lt;!-- ✅ Good --&gt;
+&lt;button data-testid="login-btn"&gt;Login&lt;/button&gt;
+
+&lt;!-- ❌ Avoid --&gt;
+&lt;button class="btn btn-primary"&gt;Login&lt;/button&gt;</pre>
+            <p><strong>Why?</strong> Data test IDs are stable and won't change with CSS changes.</p>
+
+            <h3>2. Create Focused Scenarios</h3>
+            <p>Each scenario should test one workflow:</p>
+            <div class="success">
+                <strong>✅ Good:</strong>
+                <ul>
+                    <li>"User login with valid credentials"</li>
+                    <li>"User registration flow"</li>
+                </ul>
+            </div>
+            <div class="warning">
+                <strong>❌ Avoid:</strong>
+                <ul>
+                    <li>"Complete user journey from signup to purchase" (too broad, hard to debug)</li>
+                </ul>
+            </div>
+
+            <h3>3. Add Assertions After Key Actions</h3>
+            <p>Verify the app state after important steps:</p>
+            <pre>Step 1 [click] button
+Step 2 [waitFor] result (confirm action completed)
+Step 3 [expect*] verification</pre>
+
+            <h3>4. Use Meaningful Scenario Names</h3>
+            <div class="success">
+                <strong>✅ Good:</strong>
+                <ul>
+                    <li>"Login with valid email and password"</li>
+                    <li>"Add product to cart from search results"</li>
+                </ul>
+            </div>
+            <div class="warning">
+                <strong>❌ Avoid:</strong>
+                <ul>
+                    <li>"Test 1"</li>
+                    <li>"Flow"</li>
+                </ul>
+            </div>
+
+            <h3>5. Test Edge Cases</h3>
+            <ul>
+                <li>Empty fields (error validation)</li>
+                <li>Special characters in inputs</li>
+                <li>Navigation during loading</li>
+                <li>Session timeouts</li>
+            </ul>
+        </section>
+
+        <section id="running-tests">
+            <h2>Running Tests</h2>
+            <ol>
+                <li><strong>Validate</strong> your scenarios (check for errors)</li>
+                <li>Click the <strong>"Run"</strong> button</li>
+                <li>The modal will <strong>lock all inputs</strong> while tests run</li>
+                <li>View results in real-time below</li>
+            </ol>
+        </section>
+
+        <section id="results">
+            <h2>Understanding Results</h2>
+
+            <h3>Success ✅</h3>
+            <div class="success">
+                <strong>Total: 10 | Passed: 10 | Failed: 0 | Duration: 2.34s</strong>
+                <p>All scenarios ran successfully.</p>
+            </div>
+
+            <h3>With Failures ❌</h3>
+            <div class="warning">
+                <strong>Total: 10 | Passed: 8 | Failed: 2 | Duration: 2.89s</strong>
+                <p>View the failed test details below the summary:</p>
+                <ul>
+                    <li><strong>Test name:</strong> Which scenario/step failed</li>
+                    <li><strong>Status:</strong> <code>failed</code></li>
+                    <li><strong>Error:</strong> Reason for failure (selector not found, assertion failed, timeout)</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="troubleshooting">
+            <h2>Troubleshooting</h2>
+
+            <h3>"Selector not found" Error</h3>
+            <ul>
+                <li>✅ Verify the selector exists in your application</li>
+                <li>✅ Use browser DevTools to test: <code>document.querySelector('[data-testid=...]')</code></li>
+                <li>✅ Wait before querying: Add a <code>waitFor</code> step before the step that uses the selector</li>
+            </ul>
+
+            <h3>"Timeout" Error</h3>
+            <ul>
+                <li>✅ Increase wait time: Use <code>waitFor</code> with <code>ms: 3000</code> or higher</li>
+                <li>✅ Check if the element is in an iframe (needs different selector)</li>
+                <li>✅ Verify the application is running</li>
+            </ul>
+
+            <h3>"URL/Title assertion failed"</h3>
+            <ul>
+                <li>✅ Check the exact URL/title after navigation</li>
+                <li>✅ Use "contains" checks (e.g., <code>/dashboard</code> instead of full URL)</li>
+                <li>✅ Add a <code>waitFor</code> before assertions to allow time for navigation</li>
+            </ul>
+
+            <h3>Test passes locally but fails in CI/CD</h3>
+            <ul>
+                <li>✅ Add longer waits (<code>ms: 2000+</code>) for API responses</li>
+                <li>✅ Use more specific selectors (avoid classes that might change)</li>
+                <li>✅ Check for timing issues (race conditions)</li>
+            </ul>
+        </section>
+
+        <section id="tips">
+            <h2>Tips & Tricks</h2>
+
+            <h3>Wait for Network Requests</h3>
+            <pre>Step 1 [click] → API call triggers
+Step 2 [waitFor] → ms: 2000 (wait for response)
+Step 3 [expectVisible] → Selector: [data-testid=results]</pre>
+
+            <h3>Test Multiple Paths Through Same Page</h3>
+            <p>Create separate scenarios:</p>
+            <ul>
+                <li>"Happy path: Valid login"</li>
+                <li>"Error case: Invalid password"</li>
+                <li>"Error case: Missing email"</li>
+            </ul>
+
+            <h3>Reuse Common Workflows</h3>
+            <p>Design scenarios that other tests can build on, or think of scenarios as independent tests.</p>
+
+            <h3>Validate Forms Thoroughly</h3>
+            <pre>Step 1 [fill] → email: invalid@
+Step 2 [click] → submit
+Step 3 [expectVisible] → error message
+Step 4 [expectTextContains] → "valid email"</pre>
+
+            <h3>Browser DevTools Tips</h3>
+            <ul>
+                <li>Open DevTools with <code>F12</code> or <code>Ctrl+Shift+I</code></li>
+                <li>Find elements with the element inspector</li>
+                <li>Copy selectors using DevTools context menu</li>
+                <li>Test selectors in the console: <code>document.querySelector('your-selector')</code></li>
+            </ul>
+
+            <h3>Keyboard Shortcuts</h3>
+            <p>When focused on selector/value fields:</p>
+            <ul>
+                <li><code>Enter</code> to confirm input</li>
+                <li><code>Escape</code> to cancel</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Limitations</h2>
+            <ul>
+                <li>Tests run in <strong>Chromium</strong> (other browsers not currently supported)</li>
+                <li>Maximum test duration: <strong>5 minutes</strong> per scenario</li>
+                <li>Selectors must be CSS-compatible (no complex XPath)</li>
+                <li>Cannot test across multiple domains in one scenario</li>
+            </ul>
+        </section>
+
+        <div class="footer">
+            <p><strong>TestSphereAI - UI Testing Guide</strong></p>
+            <p>For questions or issues, please contact the development team.</p>
+            <p style="margin-top: 15px; color: #9ca3af;">Last updated: February 2026</p>
+        </div>
+    </div>
+</body>
+</html>

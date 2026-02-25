@@ -1,0 +1,32 @@
+{
+  "tests": [
+    {
+      "name": "Add Media",
+      "startPath": "/",
+      "steps": [
+        {
+          "type": "click",
+          "selector": "button:has-text(\"Add New\")"
+        },
+        {
+          "type": "fill",
+          "selector": "input[placeholder=\"Enter the title...\"]",
+          "value": "Test Book Title"
+        },
+        {
+          "type": "click",
+          "selector": "button:has-text(\"Submit\")"
+        },
+        {
+          "type": "waitFor",
+          "selector": "[data-testid=\"media-card\"]",
+          "ms": 1000
+        },
+        {
+          "type": "expectVisible",
+          "selector": "text=Test Book Title"
+        }
+      ]
+    }
+  ]
+}
